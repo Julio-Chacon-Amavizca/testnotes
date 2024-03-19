@@ -9,8 +9,8 @@ export const Note = ({ note, toggleImportance }) => {
     return (
         <li className='note'>
 
-            {/* <p className='showNotes'>{note.content}</p> */}
-            {note.content}
+            <p className='showNotes'>{note.content}</p>
+            {/* {note.content} */}
             <button onClick={toggleImportance}>{label}</button>
         </li>
     )
