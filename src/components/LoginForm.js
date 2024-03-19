@@ -28,7 +28,7 @@ export default function LoginForm({ handleSubmit, ...props }) {
                         placeholder="Contraseña"
                     />
                 </div>
-                <button type='submit' className='send'>Login</button>
+                <button id='loginButton' type='submit' className='send'>Login</button>
             </form>
         </Togglable>
     )
