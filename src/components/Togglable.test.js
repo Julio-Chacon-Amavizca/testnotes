@@ -1,6 +1,6 @@
 import React from "react";
 import "@testing-library/jest-dom";
-import { prettyDOM, render, screen, within } from "@testing-library/react";
+import { prettyDOM, render, screen } from "@testing-library/react";
 import Togglable from "./Togglable";
 
 describe("<Togglable />", () => {

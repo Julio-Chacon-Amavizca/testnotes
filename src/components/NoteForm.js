@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react"
 import Togglable from "./Togglable"
+import { Button } from "react-bootstrap"
 
 export default function NoteForm({ addNote, handleLogout }) {
     const togglableRef = useRef()
@@ -30,14 +31,14 @@ export default function NoteForm({ addNote, handleLogout }) {
         <Togglable buttonLabel={'Crear Nota'} ref={togglableRef}>
             <h3>Crear una nota</h3>
 
-            <form className='notasForm' onSubmit={handleSubmit}>
+            <form className='notasForm container' onSubmit={handleSubmit}>
                 <input className='note-input'
                     value={newNote}
                     onChange={handleChange}
                     placeholder='Escribe una nota'
                 />
-                <button className='send' type="submit">save</button>
-                <button className='logout' onClick={handleLogout}>Logout</button>
+                <Button className='send' type="submit">save</Button>
+                <Button className='logout' onClick={handleLogout}>Logout</Button>
             </form>
         </Togglable>
     )

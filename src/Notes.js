@@ -7,6 +7,8 @@ import NoteForm from './components/NoteForm';
 import LoginForm from './components/LoginForm';
 import { useNotes } from './hooks/useNote';
 import { useUser } from './hooks/useUser';
+import Table from 'react-bootstrap/Table';
+import { Button } from 'react-bootstrap';
 
 const Notes = () => {
     const { notes, toggleImportanceOf, addNote } = useNotes()
@@ -68,7 +70,7 @@ const Notes = () => {
 
 
     return (
-        <div className="App">
+        <div className="App container">
             <h1>Notas</h1>
             <Notification message={errorMessage} />
             {
@@ -88,19 +90,23 @@ const Notes = () => {
             }
             <br />
             <div>
-                <button onClick={() => setShowAll(!showAll)}>
+                <Button onClick={() => setShowAll(!showAll)}>
                     show {showAll ? 'important' : 'all'}
-                </button>
+                </Button>
             </div>
-            <ul>
-                {notesToShow.map((note, i) =>
-                    <Note
-                        key={i}
-                        note={note}
-                        toggleImportance={() => toggleImportanceOfNote(note.id)}
-                    />
-                )}
-            </ul>
+            <Table striped>
+                <tbody>
+                    {notesToShow.map((note, i) =>
+                        <tr key={i}>
+                            <Note
+                                key={i}
+                                note={note}
+                                toggleImportance={() => toggleImportanceOfNote(note.id)}
+                            />
+                        </tr>
+                    )}
+                </tbody>
+            </Table>
         </div>
     );
 }

@@ -1,13 +1,15 @@
 import React from 'react';
 import Togglable from './Togglable';
 import PropTypes from 'prop-types';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 
 export default function LoginForm({ handleSubmit, ...props }) {
     return (
         <Togglable buttonLabel='Show Login'>
-            <form className='loginForm' onSubmit={handleSubmit}>
-                <div>
+            <Form className='loginForm container' onSubmit={handleSubmit}>
+                <Form.Group id='username'>
                     <input
                         className='username-input'
                         type='text'
@@ -16,8 +18,8 @@ export default function LoginForm({ handleSubmit, ...props }) {
                         onChange={props.handleUsernameChange}
                         placeholder="Usuario"
                     />
-                </div>
-                <div>
+                </Form.Group>
+                <Form.Group id='password'>
                     <input
                         className='password-input'
                         type='password'
@@ -26,10 +28,10 @@ export default function LoginForm({ handleSubmit, ...props }) {
                         onChange={props.handlePasswordChange}
                         placeholder="Contraseña"
                     />
-                </div>
-                <button id='loginButton' type='submit' className='send'>Login</button>
-            </form>
-        </Togglable>
+                </Form.Group>
+                <Button id='loginButton' type='submit'>Login</Button>
+            </Form>
+        </Togglable >
     )
 }
 
