@@ -1,0 +1,29 @@
+.docSeccion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 30px;
+}
+
+.formStyle {
+    padding: 20px;
+    border: 1px solid black;
+    width: 25%;
+    text-align: center;
+    align-items: center;
+}
+
+.form-control {
+    border-color: black !important;
+}
+
+/* button {
+    margin-top: 10px;
+    background-color: #4CAF50;
+    color: white;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+} */
