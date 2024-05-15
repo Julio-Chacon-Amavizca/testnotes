@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import LoginForm from "./components/LoginForm";
 import noteService from './services/notes';
 import loginService from '../src/services/login';
 import { useNavigate } from 'react-router-dom';
+import Context from "./context/userContextProvider";
+
 export default function Login() {
     const history = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [user, setUser] = useState(null)
-
+    const { setUser} = useContext(Context)
     const [errorMessage, setErrorMessage] = useState(null)
 
     const handleLogin = async (event) => {
@@ -38,10 +39,6 @@ export default function Login() {
 
     if (errorMessage) {
         return <div>{errorMessage}</div>
-    }
-
-    if (user) {
-        return <p>{user.name} is logged in</p>
     }
 
     return (
