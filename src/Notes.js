@@ -1,24 +1,28 @@
 import './App.css';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Note } from './components/Note'
 import React from 'react';
 import Notification from './components/Notification';
 import NoteForm from './components/NoteForm';
-import LoginForm from './components/LoginForm';
+// import LoginForm from './components/LoginForm';
 import { useNotes } from './hooks/useNote';
 import { useUser } from './hooks/useUser';
 import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
+// import Login from './Login';
 
 const Notes = () => {
     const { notes, toggleImportanceOf, addNote } = useNotes()
-    const { user, login, logout } = useUser()
+    const { logout } = useUser()
 
     const [errorMessage, setErrorMessage] = useState(null)
     const [showAll, setShowAll] = useState(true)
 
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
+    // const [username, setUsername] = useState('')
+    // const [password, setPassword] = useState('')
+    useEffect(() => {
+        console.log('holaaa')
+    }, [])
 
     const addOfNote = (noteObject) => {
         addNote(noteObject)
@@ -46,19 +50,19 @@ const Notes = () => {
     }
 
 
-    const handleLogin = async (event) => {
-        event.preventDefault()
-        try {
-            login({ username, password })
-            setUsername('')
-            setPassword('')
-        } catch (e) {
-            setErrorMessage('Wrong credentials')
-            setTimeout(() => {
-                setErrorMessage(null)
-            }, 5000)
-        }
-    }
+    // const handleLogin = async (event) => {
+    //     event.preventDefault()
+    //     try {
+    //         login({ username, password })
+    //         setUsername('')
+    //         setPassword('')
+    //     } catch (e) {
+    //         setErrorMessage('Wrong credentials')
+    //         setTimeout(() => {
+    //             setErrorMessage(null)
+    //         }, 5000)
+    //     }
+    // }
 
     const notesToShow = showAll
         ? notes
@@ -68,26 +72,17 @@ const Notes = () => {
         logout()
     }
 
-
     return (
         <div className="App container">
             <h1>Notas</h1>
             <Notification message={errorMessage} />
-            {
-                user
-                    ? <NoteForm
 
-                        addNote={addOfNote}
-                        handleLogout={handleLogout}
-                    />
-                    : <LoginForm
-                        username={username}
-                        password={password}
-                        handleUsernameChange={({ target }) => setUsername(target.value)}
-                        handlePasswordChange={({ target }) => setPassword(target.value)}
-                        handleSubmit={handleLogin}
-                    />
-            }
+            <NoteForm
+
+                addNote={addOfNote}
+                handleLogout={handleLogout}
+            />
+
             <br />
             <div>
                 <Button onClick={() => setShowAll(!showAll)}>
