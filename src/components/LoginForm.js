@@ -1,14 +1,68 @@
 import React from 'react';
-import Togglable from './Togglable';
 import PropTypes from 'prop-types';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import './LoginForm.css';
+const containerClasses = "min-h-screen flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 p-4";
+const cardClasses = "bg-white dark:bg-zinc-700 shadow-md rounded-lg p-8 max-w-sm w-full";
+const labelClasses = "block text-zinc-700 dark:text-zinc-300 text-sm font-bold mb-2";
+const inputClasses = "shadow appearance-none border rounded w-full py-2 px-3 text-zinc-700 dark:text-zinc-300 leading-tight focus:outline-none focus:shadow-outline";
+
+/*function FormField({ id, label, type, required }) {
+    return (
+        <div className="mb-4">
+            <label htmlFor={id} className={labelClasses}>{label}</label>
+            <input type={type} id={id} name={id} className={inputClasses} required={required} />
+        </div>
+    );
+}*/
+
+function FormActions({ onCancel }) {
+    return (
+        <div className="flex items-center justify-between">
+            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+                Aceptar
+            </button>
+        </div>
+    );
+}
 
 
 export default function LoginForm({ handleSubmit, ...props }) {
+
     return (
-        <Togglable buttonLabel='Show Login'>
-            <Form className='loginForm container' onSubmit={handleSubmit}>
+        <div className={containerClasses}>
+            <div className={cardClasses}>
+                <h2 className="text-2xl font-bold text-zinc-900 dark:text-white mb-6">Inicio de sesión</h2>
+                <form onSubmit={handleSubmit}>
+                    <div className="mb-4">
+                        <label htmlFor='username' className={labelClasses}>Usuario</label>
+                        <input className={inputClasses}
+                            id='username'
+                            type='text'
+                            value={props.username}
+                            name='username'
+                            onChange={props.handleUsernameChange}
+                            placeholder="Usuario"
+                            required />
+                    </div>
+                    <div className="mb-4">
+                        <label htmlFor='password' className={labelClasses}>Contraseña</label>
+                        <input className={inputClasses}
+                            id='password'
+                            type='password'
+                            value={props.password}
+                            name='password'
+                            onChange={props.handlePasswordChange}
+                            placeholder="Contraseña" />
+                    </div>
+                    <FormActions />
+                </form>
+            </div>
+        </div>
+    )
+    // Commented code
+    /*
+    return (
+            <Form className='App loginForm container' onSubmit={handleSubmit}>
                 <Form.Group id='username'>
                     <input
                         className='username-input'
@@ -31,8 +85,8 @@ export default function LoginForm({ handleSubmit, ...props }) {
                 </Form.Group>
                 <Button id='loginButton' type='submit'>Login</Button>
             </Form>
-        </Togglable >
     )
+    */
 }
 
 LoginForm.propTypes = {
