@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react"
+import { useEffect, useContext } from "react"
 import noteService from "../services/notes"
 import loginService from "../services/login"
+import Context from "../context/userContextProvider"
 
 export const useUser = () => {
-    const [user, setUser] = useState(null)
+    const {user, setUser} = useContext(Context)
+    // const {jwt, setJWT} = useContext(Context)
 
     useEffect(() => {
         const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -12,7 +14,7 @@ export const useUser = () => {
             setUser(user)
             noteService.setToken(user.token)
         }
-    }, [])
+    }, [setUser])
 
     const logout = () => {
         setUser(null)
