@@ -18,10 +18,8 @@ const Notes = () => {
     const [errorMessage, setErrorMessage] = useState(null)
     const [showAll, setShowAll] = useState(true)
 
-    // const [username, setUsername] = useState('')
-    // const [password, setPassword] = useState('')
     useEffect(() => {
-        console.log('holaaa')
+        console.log('Notes')
     }, [])
 
     const addOfNote = (noteObject) => {
@@ -48,21 +46,6 @@ const Notes = () => {
                 }, 5000)
             })
     }
-
-
-    // const handleLogin = async (event) => {
-    //     event.preventDefault()
-    //     try {
-    //         login({ username, password })
-    //         setUsername('')
-    //         setPassword('')
-    //     } catch (e) {
-    //         setErrorMessage('Wrong credentials')
-    //         setTimeout(() => {
-    //             setErrorMessage(null)
-    //         }, 5000)
-    //     }
-    // }
 
     const notesToShow = showAll
         ? notes
