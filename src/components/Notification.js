@@ -6,9 +6,11 @@ const Notification = ({ message }) => {
   }
 
   return (
-    <div className="error">
-      {message}
-    </div>
+    <label className="block">
+      <p class="mt-2 text-pink-600 text-sm">
+        {message}
+      </p>
+    </label>
   )
 }
 
