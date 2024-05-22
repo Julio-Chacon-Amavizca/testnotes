@@ -4,6 +4,7 @@ import noteService from './services/notes';
 import loginService from '../src/services/login';
 import { useNavigate } from 'react-router-dom';
 import Context from "./context/userContextProvider";
+import pdfsService from "./services/pdfs";
 
 export default function Login() {
     const history = useNavigate()
@@ -22,6 +23,7 @@ export default function Login() {
 
             window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
             noteService.setToken(user.token)
+            pdfsService.setToken(user.token)
 
             setUser(user)
             setUsername('')
@@ -29,16 +31,11 @@ export default function Login() {
 
             history('/notes')
         } catch (e) {
-            setErrorMessage('Wrong credentials')
+            setErrorMessage('Usuario o contraseña incorrectos')
             setTimeout(() => {
                 setErrorMessage(null)
             }, 5000)
         }
-    }
-
-
-    if (errorMessage) {
-        return <div>{errorMessage}</div>
     }
 
     return (
@@ -48,6 +45,7 @@ export default function Login() {
             handleUsernameChange={({ target }) => setUsername(target.value)}
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
+            errorMessage = {errorMessage}
         />
     )
 }
