@@ -2,7 +2,6 @@ import axios from "axios";
 const urlBase = "http://localhost:3001/api/notes";
 
 let token = null;
-
 const setToken = newToken => {
     token = `bearer ${newToken}`;
 }
@@ -20,6 +19,8 @@ const getAll = () => {
     return request.then(response => response.data);
 }
 
+
+
 const update = (id, newObject) => {
     const config = {
         headers: { Authorization: token }
@@ -28,6 +29,14 @@ const update = (id, newObject) => {
     return request.then(response => response.data);
 }
 
-const notesService = { create, getAll, update, setToken };
+const deleteNote = (id) => {
+    const config = {
+        headers: { Authorization: token }
+    }
+    const request = axios.delete(`${urlBase}/${id}`, config);
+    return request.then(response => response.data);
+}
+
+const notesService = { create, getAll, update, setToken, deleteNote };
 
 export default notesService;
