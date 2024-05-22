@@ -1,37 +1,22 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 // import MainContent from './MainContent';
 import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import Login from '../Login';
 import { NoteDetail } from './NoteDetail';
 import Notes from '../Notes';
-import PdfForm from './PdfForm';
 import { useNotes } from '../hooks/useNote';
 import { useUser } from '../hooks/useUser';
+import Context from '../context/userContextProvider';
+import UserForm from './UserForm';
+/*import Pdfs from '../Pdf';*/
+import Pdfs from '../Pdf';
 
-// Shared Tailwind CSS classes
-const textWhite = "text-white";
-const flex = "flex";
-
-const Home = () => {
-    return (
-        <div>
-            <h1>Home Page</h1>
-        </div>
-    )
-}
-
-const Users = () => {
-    return (
-        <div>
-            <h1>Users</h1>
-        </div>
-    )
-}
 
 const Sidebar = ({ isOpen, onClose }) => {
     // Ref to track the sidebar DOM element
     const sidebarRef = useRef();
-    const { user, logout } = useUser()
+    const { logout } = useUser()
+    const { user } = useContext(Context)
     console.log('user', user)
 
 
@@ -57,21 +42,23 @@ const Sidebar = ({ isOpen, onClose }) => {
 
 
     return (
-        <div ref={sidebarRef} className={`bg-zinc-700 w-64 p-5 ${textWhite} space-y-2`}>
-            {
-                user
-                    ? <Link to="/login" onClick={handleLogout} className="block">Logout</Link>
-                    : <Link to="/login" className="block">Login</Link>
-            }
+        <div ref={sidebarRef} className={`bg-zinc-700 w-64 p-5 text-white space-y-2`}>
+
             {
                 user
                     ? <>
                         <Link to="/" className="block">Inicio</Link>
                         <Link to="/notes" className="block">Notas</Link>
                         <Link to="/users" className="block">Usuarios</Link>
-                        <Link to="/documents" className="block">Usuarios</Link>
+                        <Link to="/documents" className="block">Documentos</Link>
                     </>
-                    : <em>Inicie sesión</em>
+                    : ""
+            }
+            {
+                user && window.localStorage.getItem('loggedNoteappUser')
+                    ? <em><Link to="/login" onClick={handleLogout} className="block"><br />Cerrar Sesion</Link></em>
+                    : <Link to="/login" className="block">Login <br /> <p>Inicie sesión</p></Link>
+
             }
         </div >
     );
@@ -79,7 +66,7 @@ const Sidebar = ({ isOpen, onClose }) => {
 
 const Navbar = ({ onToggle }) => (
     <nav className="bg-zinc-800 p-4">
-        <button onClick={onToggle} className={`${textWhite} focus:outline-none`}>
+        <button onClick={onToggle} className={`text-white focus:outline-none`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16m-7 6h7" />
             </svg>
@@ -89,45 +76,56 @@ const Navbar = ({ onToggle }) => (
 
 
 const Main = () => {
-    const [sidebarOpen, setSidebarOpen] = useState(false);
-
+    const [sidebarOpen, setSidebarOpen] = useState(true);
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
     const closeSidebar = () => setSidebarOpen(false);
-    const { notes } = useNotes()
-    const { user } = useUser()
+    const { user } = useContext(Context);
+    const { notes } = useNotes();
     return (
-        <div className={`min-h-screen ${flex} flex-col`}>
+        <div className={`min-h-screen flex flex-col `}>
             <Navbar onToggle={toggleSidebar} />
-            <div className={`${flex} flex-grow`}>
+            <div className={`flex flex-grow`}>
                 <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
-                <div className="flex-grow p-0">
-                    <Routes>
-                        <Route exact path="/login"
-                            element={
-                                user
-                                    ? <Navigate to='/notes' />
-                                    : <Login />}
-                        />
-                        <Route path="/notes/:id"
-                            element={<NoteDetail notes={notes} />}
-                        />
-                        <Route path="/notes"
-                            element={<Notes />}
-                        />
-                        <Route path="/"
-                            element={<Home />}
-                        />
-                        <Route path="/users"
-                            element={<Users />}
-                        />
-                        <Route path="/documents"
-                            element={<PdfForm />}
-                        />
-                        <Route
-                            path="*"
-                            element={<Navigate to="/" replace />}
-                        />
-                    </Routes>
+                <div className="flex-1 flex flex-col bg-zinc-100 p-0">
+                    <div className="justify-center">
+                        <Routes>
+                            <Route exact path="/login"
+                                element={
+                                    user && window.localStorage.getItem('loggedNoteappUser')
+                                        ? <Navigate to='/notes' />
+                                        : <Login />}
+                            />
+                            {
+                                user && window.localStorage.getItem('loggedNoteappUser')
+                                    ?
+                                    <><Route path="/notes/:id"
+                                        element={<NoteDetail notes={notes} />}
+                                    />
+                                        <Route path="/notes"
+                                            element={<Notes />}
+                                        />
+
+                                        <Route path="/users"
+                                            element={<UserForm />}
+                                        />
+                                        <Route path="/documents"
+                                            element={<Pdfs />}
+                                        />
+                                        <Route path="/"
+                                            element={<UserForm />}
+                                        />
+                                    </>
+                                    : <><Route path="/login"
+                                        element={<Login />}
+                                    /></>
+                            }
+                            <Route
+                                path="/*"
+                                element={<Navigate to="/login" replace />}
+                            />
+
+                        </Routes>
+                    </div>
                 </div>
             </div>
         </div>
