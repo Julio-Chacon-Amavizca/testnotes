@@ -16,9 +16,7 @@ const App = () => {
   return (
     <UserContextProvider>
       <BrowserRouter>
-        <div>
           <Main />
-        </div>
       </BrowserRouter>
     </UserContextProvider>
   );
