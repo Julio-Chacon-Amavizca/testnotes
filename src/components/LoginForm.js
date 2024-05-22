@@ -1,24 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './LoginForm.css';
-const containerClasses = "min-h-screen flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 p-4";
-const cardClasses = "bg-white dark:bg-zinc-700 shadow-md rounded-lg p-8 max-w-sm w-full";
-const labelClasses = "block text-zinc-700 dark:text-zinc-300 text-sm font-bold mb-2";
-const inputClasses = "shadow appearance-none border rounded w-full py-2 px-3 text-zinc-700 dark:text-zinc-300 leading-tight focus:outline-none focus:shadow-outline";
-
-/*function FormField({ id, label, type, required }) {
-    return (
-        <div className="mb-4">
-            <label htmlFor={id} className={labelClasses}>{label}</label>
-            <input type={type} id={id} name={id} className={inputClasses} required={required} />
-        </div>
-    );
-}*/
+import Notification from './Notification';
+const containerClasses = "min-h-screen flex items-center justify-center bg-zinc-100 dark:bg-zinc-800 p-4 h-14 bg-gradient-to-r";
+const cardClasses = "border-gray-800 bg-transparent shadow-2xl shadow-gray-700 rounded-lg border-2 p-8 max-w-sm w-full ";
+const labelClasses = "block text-zinc-700 dark:text-zinc-200 text-sm font-bold mb-2";
+const inputClasses = "shadow appearance-none border rounded w-full py-2 px-3 text-zinc-700 dark:text-zinc-500 leading-tight focus:outline-none focus:shadow-outline";
 
 function FormActions({ onCancel }) {
     return (
         <div className="flex items-center justify-between">
-            <button type="submit" className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+            <button type="submit" className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                 Aceptar
             </button>
         </div>
@@ -54,6 +46,7 @@ export default function LoginForm({ handleSubmit, ...props }) {
                             onChange={props.handlePasswordChange}
                             placeholder="Contraseña" />
                     </div>
+                    <Notification message={props.errorMessage} /><br />
                     <FormActions />
                 </form>
             </div>
