@@ -1,6 +1,7 @@
 import axios from "axios";
 const urlBase = "http://localhost:3001/api/PdfUpload";
 const urlGetFiles = "http://localhost:3001/api/get-files";
+const urlDelete = "http://localhost:3001/api/delete-files";
 
 let token = null;
 const setToken = newToken => {
@@ -15,23 +16,12 @@ const create = (newObject) => {
         }
     }
     const request = axios.post(urlBase, newObject, config)
-    /*.then((data) => {
-        console.log(data.data);
-        if (data.data.status === 200) {
-            console.log('Archivo subido correctamente');
-            console.log(data);
-        }
-        if (data.data.status === 401) {
-            console.log('Error al subir el archivo');
-            alert('Error al subir el archivo, token inválido o no existe. Por favor, inicia sesión nuevamente.');
-        }
-    });*/
 
     return request.then(response => {
         if (response.data.status === 200) {
             alert('Archivo subido correctamente');
             console.log(response);
-            
+
         }
         if (response.data.status === 401) {
             alert('Error al subir el archivo. Error al subir el archivo, token inválido o no existe. Por favor, inicia sesión nuevamente.');
@@ -43,10 +33,29 @@ const create = (newObject) => {
 
 
 const getAll = () => {
-    const request = axios.get(urlGetFiles);
+    const config = {
+        headers: {
+            Authorization: token
+        }
+    }
+    const request = axios.get(urlGetFiles, config);
     return request.then(response => response.data.data);
 }
 
-const pdfsService = { create, setToken, getAll };
+const deletePdf = (id) => {
+    const config = {
+        headers: {
+            Authorization: token
+        }
+    }
+    const request = axios.delete(`${urlDelete}/${id}`, config);
+
+    const request2 = new Promise((resolve) => {
+        resolve(request)
+    });
+    return request2.then(response => response);
+}
+
+const pdfsService = { create, setToken, getAll, deletePdf };
 
 export default pdfsService;
