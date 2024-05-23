@@ -22,7 +22,7 @@ export const usePdf = () => {
                     console.log('Error al subir el archivo. Error al subir el archivo, token inválido o no existe. Por favor, inicia sesión nuevamente.');
                     logout()
                 }
-                
+
                 if (returnedPdf.status === 200) {
                     alert('Archivo subido correctamente');
                     setPdfs(pdfs.concat(returnedPdf.data))
@@ -31,8 +31,26 @@ export const usePdf = () => {
             })
     }
 
+    const deletePdf = (id, indexItem) => {
+        return pdfsService
+            .deletePdf(id)
+            .then(data => {
+                // console.log(data)
+                // console.log(data.data)
+                if (data.status === 401) {
+                    console.log('Error al subir el archivo. Error al subir el archivo, token inválido o no existe. Por favor, inicia sesión nuevamente.');
+                    logout()
+                }
+                if (data.status === 200) {
+                    setPdfs(pdfs.filter((a, index) => index !== indexItem))
+                    alert('Archivo eliminado correctamente');
+                }
+            })
+    }
+
     return {
         pdfs,
-        addPdf
+        addPdf,
+        deletePdf
     }
 }
