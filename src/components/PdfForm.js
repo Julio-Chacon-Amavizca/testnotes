@@ -44,35 +44,6 @@ export default function PdfForm({ addThePDF }) {
         } else {
             alert('Por favor, seleccione un nuevo archivo PDF');
         }
-
-
-
-
-        /*if (pdfObject.has('title') && pdfObject.has('file')) {
-            console.log('Archivo subido correctamente');
-        } else {
-            console.log('Error al subir el archivo');
-        }*/
-
-
-
-        /*
-        const newObject = {
-            title: title,
-            file: file,
-        };
-        addThePDF(newObject);
-        */
-
-        /*const result = await axios.post(
-            "http://localhost:3001/api/PdfUpload",
-            formData,
-            {
-                headers: { "Content-Type": "multipart/form-data" },
-            }
-        );*/
-
-        //console.log(newObject);
     }
 
 
