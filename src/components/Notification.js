@@ -7,7 +7,7 @@ const Notification = ({ message }) => {
 
   return (
     <label className="block">
-      <p class="mt-2 text-pink-600 text-sm">
+      <p className="mt-2 text-pink-600 text-sm">
         {message}
       </p>
     </label>
