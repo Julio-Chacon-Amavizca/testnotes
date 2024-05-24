@@ -52,34 +52,6 @@ export default function LoginForm({ handleSubmit, ...props }) {
             </div>
         </div>
     )
-    // Commented code
-    /*
-    return (
-            <Form className='App loginForm container' onSubmit={handleSubmit}>
-                <Form.Group id='username'>
-                    <input
-                        className='username-input'
-                        type='text'
-                        value={props.username}
-                        name='username'
-                        onChange={props.handleUsernameChange}
-                        placeholder="Usuario"
-                    />
-                </Form.Group>
-                <Form.Group id='password'>
-                    <input
-                        className='password-input'
-                        type='password'
-                        value={props.password}
-                        name='password'
-                        onChange={props.handlePasswordChange}
-                        placeholder="Contraseña"
-                    />
-                </Form.Group>
-                <Button id='loginButton' type='submit'>Login</Button>
-            </Form>
-    )
-    */
 }
 
 LoginForm.propTypes = {
