@@ -5,12 +5,13 @@ import loginService from '../src/services/login';
 import { useNavigate } from 'react-router-dom';
 import Context from "./context/userContextProvider";
 import pdfsService from "./services/pdfs";
+import userService from "./services/user";
 
 export default function Login() {
     const history = useNavigate()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const { setUser} = useContext(Context)
+    const { setUser } = useContext(Context)
     const [errorMessage, setErrorMessage] = useState(null)
 
     const handleLogin = async (event) => {
@@ -24,12 +25,13 @@ export default function Login() {
             window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
             noteService.setToken(user.token)
             pdfsService.setToken(user.token)
+            userService.setToken(user.token)
 
             setUser(user)
             setUsername('')
             setPassword('')
 
-            history('/notes')
+            history('/home')
         } catch (e) {
             setErrorMessage('Usuario o contraseña incorrectos')
             setTimeout(() => {
@@ -45,7 +47,7 @@ export default function Login() {
             handleUsernameChange={({ target }) => setUsername(target.value)}
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
-            errorMessage = {errorMessage}
+            errorMessage={errorMessage}
         />
     )
 }
