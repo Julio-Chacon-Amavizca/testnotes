@@ -18,7 +18,7 @@ export default function NoteForm({ addNote, handleLogout }) {
             content: newNote,
             important: Math.random() < 0.5,
         }
-        
+
         addNote(noteObject)
         setNewNote('')
 
@@ -30,7 +30,10 @@ export default function NoteForm({ addNote, handleLogout }) {
         <Togglable buttonLabel={'Crear Nota'} ref={togglableRef}>
             <h3>Crear una nota</h3>
 
-            <form className='notasForm container' onSubmit={handleSubmit}>
+            <form
+                className='notasForm container'
+                onSubmit={handleSubmit}
+            >
                 <input className='note-input'
                     value={newNote}
                     onChange={handleChange}
