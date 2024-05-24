@@ -2,15 +2,29 @@ import React, { useState, useEffect, useRef, useContext } from 'react';
 // import MainContent from './MainContent';
 import { Link, Navigate, Route, Routes } from 'react-router-dom';
 import Login from '../Login';
-import { NoteDetail } from './NoteDetail';
-import Notes from '../Notes';
-import { useNotes } from '../hooks/useNote';
 import { useUser } from '../hooks/useUser';
 import Context from '../context/userContextProvider';
-import UserForm from './UserForm';
 /*import Pdfs from '../Pdf';*/
 import Pdfs from '../Pdf';
+import Users from '../User';
 
+const Home = () => {
+    const containerClasses = "max-w-lg mx-auto bg-gradient-to-r p-8 rounded-lg shadow-lg";
+    const textClasses = "text-white text-lg";
+
+
+    return (
+        <div className={`${containerClasses} from-blue-500 to-teal-400 dark:from-blue-800 dark:to-teal-700 mt-16`}>
+            <div className="flex items-center">
+                <img src="https://placehold.co/150x150" alt="Icono Colorido" className="mr-4 rounded-full" />
+                <p className={textClasses}>
+                    Recuerda que en esta página podrás colocar todos tus archivos importantes y necesarios para tenerlos en el momento que necesites :D
+                </p>
+            </div>
+        </div>
+
+    )
+}
 
 const Sidebar = ({ isOpen, onClose }) => {
     // Ref to track the sidebar DOM element
@@ -48,7 +62,6 @@ const Sidebar = ({ isOpen, onClose }) => {
                 user
                     ? <>
                         <Link to="/" className="block">Inicio</Link>
-                        <Link to="/notes" className="block">Notas</Link>
                         <Link to="/users" className="block">Usuarios</Link>
                         <Link to="/documents" className="block">Documentos</Link>
                     </>
@@ -80,7 +93,6 @@ const Main = () => {
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
     const closeSidebar = () => setSidebarOpen(false);
     const { user } = useContext(Context);
-    const { notes } = useNotes();
     return (
         <div className={`min-h-screen flex flex-col `}>
             <Navbar onToggle={toggleSidebar} />
@@ -92,32 +104,31 @@ const Main = () => {
                             <Route exact path="/login"
                                 element={
                                     user && window.localStorage.getItem('loggedNoteappUser')
-                                        ? <Navigate to='/notes' />
+                                        ? <Navigate to='/login' />
                                         : <Login />}
                             />
+
                             {
                                 user && window.localStorage.getItem('loggedNoteappUser')
                                     ?
-                                    <><Route path="/notes/:id"
-                                        element={<NoteDetail notes={notes} />}
-                                    />
-                                        <Route path="/notes"
-                                            element={<Notes />}
-                                        />
-
+                                    <>
                                         <Route path="/users"
-                                            element={<UserForm />}
+                                            element={<Users />}
                                         />
                                         <Route path="/documents"
                                             element={<Pdfs />}
                                         />
                                         <Route path="/"
-                                            element={<UserForm />}
+                                            element={<Home />}
+                                        />
+                                        <Route path="/home"
+                                            element={<Home />}
                                         />
                                     </>
                                     : <><Route path="/login"
                                         element={<Login />}
-                                    /></>
+                                    />
+                                    </>
                             }
                             <Route
                                 path="/*"
@@ -133,71 +144,3 @@ const Main = () => {
 };
 
 export default Main;
-
-/*import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
-import { useUser } from '../hooks/useUser';
-import MainContent from './MainContent';
-
-// Constants for repeated class names
-const TEXT_SMALL = "text-sm";
-
-
-// Main React Component
-function Test() {
-    // State to manage sidebar visibility
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-
-    // Function to toggle sidebar visibility
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-
-    return (
-        <div className="flex">
-            <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-            <MainContent />
-        </div>
-    );
-}
-
-// Sidebar Component
-function Sidebar({ isOpen, toggleSidebar }) {
-    const { user, logout } = useUser()
-
-    const handleLogout = () => {
-        logout()
-    }
-
-
-    return (
-        <div className={`fixed inset-y-0 left-0 z-40 bg-zinc-800 text-white w-64 shadow-lg transform transition-transform duration-300 ${isOpen ? '' : '-translate-x-full'}`}>
-            <div className="h-full flex flex-col justify-between">
-                <div className="p-4">
-                    <h2 className="text-lg font-semibold mb-4">Sidebar</h2>
-                    <button onClick={toggleSidebar} className="text-white mb-4">Toggle</button>
-                    <NavLink>
-                        <ul className="space-y-2">
-                            {
-                                user
-                                    ? <li><Link to="/" className={TEXT_SMALL} onClick={handleLogout}>Logout</Link></li>
-                                    : <li><Link to="/login" className={TEXT_SMALL}>Login</Link></li>
-                            }
-                            <li><Link to="/" className={TEXT_SMALL}>Home</Link></li>
-                            <li><Link to="/notes" className={TEXT_SMALL}>Notes</Link></li>
-                            <li><Link to="/users" className={TEXT_SMALL}>Users</Link></li>
-                            <li><Link to="/documents" className={TEXT_SMALL}>Documents</Link></li>
-                            <li><Link to="/principal" className={TEXT_SMALL}>Principal</Link></li>
-
-                        </ul>
-                    </NavLink>
-                </div>
-                <div className="p-4 bg-zinc-700">
-                    <p className={TEXT_SMALL}>&copy; 2023 Your Company</p>
-                </div>
-            </div>
-        </div>
-    );
-}
-
-export default Test;*/
