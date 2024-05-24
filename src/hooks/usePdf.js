@@ -48,9 +48,14 @@ export const usePdf = () => {
             })
     }
 
+    const showPDF = (pdf) => {
+        window.open(`http://localhost:3001/files/${pdf}`, "_blank", "norefferer, noopener, noreferrer, width=600, height=800");
+    }
+
     return {
         pdfs,
         addPdf,
-        deletePdf
+        deletePdf,
+        showPDF
     }
 }
