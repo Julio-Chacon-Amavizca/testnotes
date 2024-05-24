@@ -51,7 +51,9 @@ export default function PdfForm({ addThePDF }) {
     return (
         <div className="flex-1 flex flex-col items-center justify-start p-10 bg-zinc-100">
             <div className="w-full max-w-lg mb-8">
-                <form key={'a'} className="bg-white shadow-md rounded px-8 pt-6 pb-8" onSubmit={submitImage}>
+                <form key={'a'}
+                    className="bg-white shadow-md rounded px-8 pt-6 pb-8"
+                    onSubmit={submitImage}>
                     <div className="mb-4">
                         <label className="block text-zinc-700 text-sm font-bold mb-2" htmlFor="title">
                             Title
